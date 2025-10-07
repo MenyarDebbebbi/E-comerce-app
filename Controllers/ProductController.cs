@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using WebApplication2.Models;   // Pour Product
 using WebApplication2.Models.Repositories;
@@ -6,6 +7,7 @@ using WebApplication2.ViewModels;
 
 namespace WebApplication2.Controllers
 {
+    [Authorize(Roles = "Admin,Manager")]
     public class ProductController : Controller
     {
         private readonly IProductRepository ProductRepository;
@@ -18,7 +20,7 @@ namespace WebApplication2.Controllers
             CategRepository = categRepository;
             this.hostingEnvironment = hostingEnvironment;
         }
-
+        [AllowAnonymous]
         // GET: ProductController
         public ActionResult Index()
         {

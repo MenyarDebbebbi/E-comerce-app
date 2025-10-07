@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using WebApplication2.Models;   // Pour Category
 using WebApplication2.Models.Repositories;
 
 
 namespace WebApplication2.Controllers
 {
+    [Authorize(Roles = "Admin,Manager")]
+
     public class CategoryController : Controller
     {
         private readonly ICategoryRepository categoryRepository;
@@ -14,6 +17,7 @@ namespace WebApplication2.Controllers
         {
             this.categoryRepository = categoryRepository;
         }
+        [AllowAnonymous]
 
         // GET: Category
         public ActionResult Index()

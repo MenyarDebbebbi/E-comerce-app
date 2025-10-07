@@ -1,0 +1,28 @@
+﻿@model WebApplication2.ViewModels.CreateRoleViewModel
+@{
+    ViewData["Title"] = "Create New Role";
+}
+<h1>Create New Role</h1>
+
+<form asp-action="CreateRole" asp-controller="Admin" method="post" class="mt-3">
+    @Html.AntiForgeryToken()
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div class="row mb-3">
+        <label asp-for="RoleName" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="RoleName" class="form-control" placeholder="Name" />
+            <span asp-validation-for="RoleName" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-10 offset-sm-2">
+            <button type="submit" class="btn btn-primary" style="width:auto">Create Role</button>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

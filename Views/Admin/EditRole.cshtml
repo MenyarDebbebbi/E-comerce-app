@@ -1,0 +1,68 @@
+﻿@model WebApplication2.ViewModels.EditRoleViewModel
+@{
+    ViewData["Title"] = "Edit Role";
+}
+<h1>Edit Role</h1>
+<hr />
+
+<form asp-action="EditRole" asp-controller="Admin" method="post" class="mt-3">
+    @Html.AntiForgeryToken()
+
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div class="row mb-3">
+        <label asp-for="Id" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="Id" class="form-control" disabled />
+            <input type="hidden" asp-for="Id" />
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <label asp-for="RoleName" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="RoleName" class="form-control" />
+            <span asp-validation-for="RoleName" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-sm-10 offset-sm-2">
+            <button type="submit" class="btn btn-primary">Update</button>
+            <a asp-action="ListRoles" asp-controller="Admin" class="btn btn-secondary">Cancel</a>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h3>Users in this role</h3>
+        </div>
+        <div class="card-body">
+            @if (Model.Users != null && Model.Users.Any())
+            {
+                <ul class="mb-0">
+                    @foreach (var user in Model.Users)
+                    {
+                        <li>@user</li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <p class="mb-0">None at the moment</p>
+            }
+        </div>
+        <div class="card-footer">
+            <a asp-controller="Admin"
+               asp-action="EditUsersInRole"
+               asp-route-roleId="@Model.Id"
+               class="btn btn-outline-primary">
+                Add or Remove Users from this Role
+            </a>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

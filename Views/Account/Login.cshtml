@@ -1,0 +1,37 @@
+﻿@model WebApplication2.ViewModels.LoginViewModel
+@{
+    ViewData["Title"] = "User Login";
+    var returnUrl = Context.Request.Query["ReturnUrl"];
+}
+<h1>User Login</h1>
+<hr />
+<div class="row">
+    <div class="col-md-6 col-lg-4">
+        <form asp-controller="Account" asp-action="Login" asp-route-returnurl="@returnUrl" method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <div class="mb-3">
+                <label asp-for="Email" class="form-label"></label>
+                <input asp-for="Email" class="form-control" type="email" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Password" class="form-label"></label>
+                <input asp-for="Password" class="form-control" type="password" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <div class="form-check mb-4">
+                <input asp-for="RememberMe" class="form-check-input" />
+                <label asp-for="RememberMe" class="form-check-label"></label>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Login</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
