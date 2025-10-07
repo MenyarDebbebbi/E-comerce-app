@@ -1,8 +1,73 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@{
+    ViewData["Title"] = "Accueil";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="admin-header text-center">
+    <div class="container">
+        <h1 class="display-4 mb-3">Bienvenue sur BuyTounsi</h1>
+        <p class="lead">Application de gestion moderne avec authentification et autorisation</p>
+    </div>
+</div>
+
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <div class="mb-3">
+                        <i class="fas fa-users fa-3x text-primary"></i>
+                    </div>
+                    <h5 class="card-title">Gestion des Utilisateurs</h5>
+                    <p class="card-text">Inscription, connexion et gestion des rôles utilisateurs avec authentification sécurisée.</p>
+                    <a asp-controller="Account" asp-action="Register" class="btn btn-primary">S'inscrire</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <div class="mb-3">
+                        <i class="fas fa-box fa-3x text-success"></i>
+                    </div>
+                    <h5 class="card-title">Gestion des Produits</h5>
+                    <p class="card-text">Créez, modifiez et gérez votre catalogue de produits avec images et catégories.</p>
+                    <a asp-controller="Product" asp-action="Index" class="btn btn-success">Voir les Produits</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <div class="mb-3">
+                        <i class="fas fa-tags fa-3x text-warning"></i>
+                    </div>
+                    <h5 class="card-title">Gestion des Catégories</h5>
+                    <p class="card-text">Organisez vos produits avec un système de catégories flexible et intuitif.</p>
+                    <a asp-controller="Category" asp-action="Index" class="btn btn-warning">Voir les Catégories</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+    {
+        <div class="row mt-5">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="mb-0">Panneau d'Administration</h4>
+                    </div>
+                    <div class="card-body">
+                        <p>En tant qu'administrateur, vous avez accès à toutes les fonctionnalités de gestion des rôles et des utilisateurs.</p>
+                        <div class="d-flex gap-2">
+                            <a asp-controller="Admin" asp-action="CreateRole" class="btn btn-primary">Créer un Rôle</a>
+                            <a asp-controller="Admin" asp-action="ListRoles" class="btn btn-secondary">Gérer les Rôles</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
 </div>
