@@ -1,51 +1,55 @@
 ﻿@model WebApplication2.Models.Product
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Détails du produit";
     var photoPath = "~/images/" + (Model.Image ?? "noimage.jpg");
 }
-<h1>Details</h1>
-<div>
-    <h4>Product</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Price)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.QteStock)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.QteStock)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Category)
-        </dt>
-        <dd class="col-sm-10">
 
-            @Html.DisplayFor(model => model.Category.CategoryName)
-        </dd>
-        <dt class="col-sm-2">
-            <label><b>Image</b> </label>
-        </dt>
-        <dd class="col-sm-10">
-            <div class="card-body text-left">
-                <img src="@photoPath" asp-append-version="true"
-                     height="100" width="100" />
-
+<div class="container py-4">
+    <div class="card product-card">
+        <div class="row g-0">
+            <div class="col-md-5">
+                <img src="@photoPath" asp-append-version="true" class="img-fluid w-100" style="object-fit: cover; height: 100%; min-height: 320px; border-top-left-radius: var(--border-radius); border-bottom-left-radius: var(--border-radius);" alt="@Model.Name" />
             </div>
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.ProductId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+            <div class="col-md-7">
+                <div class="card-body">
+                    <h2 class="product-title mb-2">@Model.Name</h2>
+                    <div class="d-flex align-items-center mb-3">
+                        <span class="product-price me-3">@Model.Price.ToString("0.00") DT</span>
+                        <span class="badge bg-success me-2">Stock: @Model.QteStock</span>
+                        <span class="badge bg-primary">@Model.Category?.CategoryName</span>
+                    </div>
+
+                    <hr />
+
+                    <div class="mb-4">
+                        <div class="row mb-2">
+                            <div class="col-5 text-muted">Identifiant</div>
+                            <div class="col-7">#@Model.ProductId</div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-5 text-muted">Catégorie</div>
+                            <div class="col-7">@Model.Category?.CategoryName</div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-5 text-muted">Quantité en stock</div>
+                            <div class="col-7">@Model.QteStock</div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-5 text-muted">Prix</div>
+                            <div class="col-7">@Model.Price.ToString("0.00") DT</div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex flex-wrap gap-2">
+                        <a asp-action="Edit" asp-route-id="@Model?.ProductId" class="btn btn-primary">
+                            <i class="fas fa-edit me-2"></i>Modifier
+                        </a>
+                        <a asp-action="Index" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left me-2"></i>Retour à la liste
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

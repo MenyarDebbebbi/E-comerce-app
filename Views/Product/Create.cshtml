@@ -1,53 +1,113 @@
 ﻿@model WebApplication2.ViewModels.CreateViewModel
 @{
-ViewData["Title"] = "Create";
+    ViewData["Title"] = "Ajouter un Produit";
 }
-<h1>Create</h1>
-<h4>Product</h4>
-<hr />
-<div class="row">
-<div class="col-md-4">
-@*To support file upload set the form element enctype="multipart/form-data" *@
-<form enctype="multipart/form-data" asp-action="Create">
-<div asp-validation-summary="All" class="text-danger"></div>
-<div class="form-group">
-<label asp-for="Name" class="control-label"></label>
-<input asp-for="Name" class="form-control" />
-<span asp-validation-for="Name" class="text-danger"></span>
-</div>
-<div class="form-group">
-<label asp-for="Price" class="control-label"></label>
-<input asp-for="Price" class="form-control" />
-<span asp-validation-for="Price" class="text-danger"></span>
-</div>
-<div class="form-group">
-<label asp-for="QteStock" class="control-label"></label>
-<input asp-for="QteStock" class="form-control" />
-<span asp-validation-for="QteStock" class="text-danger"></span>
-</div>
-<div class="form-group">
-<label asp-for="CategoryId" class="control-label"></label>
-<select asp-for="CategoryId" class ="form-control" asp-items="ViewBag.CategoryId"></select>
-</div>
-            @* asp-for tag helper is set to "ImagePath" property. "ImagePath" property type is IFormFile so at runtime asp.net core generates
-file upload control (input type=file)*@
-            <div class="form-group row">
-                <label asp-for="ImagePath" class="col-sm-2 col-form-label"></label>
-                <div class="col-sm-10">
-                    <div class="custom-file">
-                        <input asp-for="ImagePath" class="form-control custom-file-input">
-                        <label class="custom-file-label">Choose File...</label>
-                    </div>
+
+<div class="container-fluid py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-gradient-primary text-white text-center py-4">
+                    <h2 class="mb-0">
+                        <i class="fas fa-plus-circle me-2"></i>
+                        Ajouter un Nouveau Produit
+                    </h2>
+                    <p class="mb-0 mt-2 opacity-75">Remplissez les informations ci-dessous pour créer un nouveau produit</p>
+                </div>
+                
+                <div class="card-body p-5">
+                    <form enctype="multipart/form-data" asp-action="Create" class="needs-validation" novalidate>
+                        <div asp-validation-summary="All" class="alert alert-danger" role="alert"></div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <div class="form-floating">
+                                    <input asp-for="Name" class="form-control" placeholder="Nom du produit" required />
+                                    <label asp-for="Name" class="form-label">
+                                        <i class="fas fa-tag me-2"></i>Nom du Produit
+                                    </label>
+                                    <span asp-validation-for="Name" class="text-danger"></span>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6 mb-4">
+                                <div class="form-floating">
+                                    <input asp-for="Price" type="number" step="0.01" class="form-control" placeholder="Prix" required />
+                                    <label asp-for="Price" class="form-label">
+                                        <i class="fas fa-dollar-sign me-2"></i>Prix (TND)
+                                    </label>
+                                    <span asp-validation-for="Price" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <div class="form-floating">
+                                    <input asp-for="QteStock" type="number" class="form-control" placeholder="Quantité en stock" required />
+                                    <label asp-for="QteStock" class="form-label">
+                                        <i class="fas fa-boxes me-2"></i>Quantité en Stock
+                                    </label>
+                                    <span asp-validation-for="QteStock" class="text-danger"></span>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6 mb-4">
+                                <div class="form-floating">
+                                    <select asp-for="CategoryId" class="form-select" asp-items="ViewBag.CategoryId" required>
+                                        <option value="">Sélectionnez une catégorie</option>
+                                    </select>
+                                    <label asp-for="CategoryId" class="form-label">
+                                        <i class="fas fa-list me-2"></i>Catégorie
+                                    </label>
+                                    <span asp-validation-for="CategoryId" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label asp-for="ImagePath" class="form-label fw-bold mb-3">
+                                <i class="fas fa-image me-2"></i>Image du Produit
+                            </label>
+                            <div class="file-upload-container">
+                                <div class="file-upload-wrapper">
+                                    <input asp-for="ImagePath" type="file" class="file-upload-input" accept="image/*" />
+                                    <div class="file-upload-display">
+                                        <div class="file-upload-icon">
+                                            <i class="fas fa-cloud-upload-alt"></i>
+                                        </div>
+                                        <div class="file-upload-text">
+                                            <h5>Glissez-déposez votre image ici</h5>
+                                            <p>ou <span class="text-primary">cliquez pour parcourir</span></p>
+                                            <small class="text-muted">Formats acceptés: JPG, PNG, GIF (Max: 5MB)</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="file-preview mt-3" style="display: none;">
+                                    <img id="imagePreview" class="img-thumbnail" style="max-width: 200px; max-height: 200px;" />
+                                    <div class="file-info mt-2">
+                                        <small class="text-muted" id="fileName"></small>
+                                    </div>
+                                </div>
+                            </div>
+                            <span asp-validation-for="ImagePath" class="text-danger"></span>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between align-items-center pt-4">
+                            <a asp-action="Index" class="btn btn-outline-secondary btn-lg">
+                                <i class="fas fa-arrow-left me-2"></i>
+                                Retour à la Liste
+                            </a>
+                            <button type="submit" class="btn btn-primary btn-lg px-5">
+                                <i class="fas fa-save me-2"></i>
+                                Créer le Produit
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
-</div>
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 @*@section Scripts {
 @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
@@ -56,10 +116,85 @@ file upload control (input type=file)*@
 @section Scripts {
     <script>
         $(document).ready(function () {
-        $('.custom-file-input').on("change", function () {
-        var fileName = $(this).val().split("\\").pop();
-        $(this).next('.custom-file-label').html(fileName);
-        });
+            // Gestion de l'upload d'image avec prévisualisation
+            $('.file-upload-input').on('change', function() {
+                const file = this.files[0];
+                const preview = $('#imagePreview');
+                const fileName = $('#fileName');
+                const filePreview = $('.file-preview');
+                
+                if (file) {
+                    // Vérifier la taille du fichier (5MB max)
+                    if (file.size > 5 * 1024 * 1024) {
+                        alert('Le fichier est trop volumineux. Taille maximale: 5MB');
+                        this.value = '';
+                        return;
+                    }
+                    
+                    // Vérifier le type de fichier
+                    if (!file.type.match('image.*')) {
+                        alert('Veuillez sélectionner un fichier image valide');
+                        this.value = '';
+                        return;
+                    }
+                    
+                    // Afficher la prévisualisation
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        preview.attr('src', e.target.result);
+                        fileName.text(file.name);
+                        filePreview.show();
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    filePreview.hide();
+                }
+            });
+            
+            // Gestion du clic sur la zone d'upload
+            $('.file-upload-display').on('click', function(e) {
+                e.preventDefault();
+                $('.file-upload-input').click();
+            });
+            
+            // Gestion du drag & drop
+            $('.file-upload-display').on('dragover', function(e) {
+                e.preventDefault();
+                $(this).addClass('drag-over');
+            });
+            
+            $('.file-upload-display').on('dragleave', function(e) {
+                e.preventDefault();
+                $(this).removeClass('drag-over');
+            });
+            
+            $('.file-upload-display').on('drop', function(e) {
+                e.preventDefault();
+                $(this).removeClass('drag-over');
+                
+                const files = e.originalEvent.dataTransfer.files;
+                if (files.length > 0) {
+                    $('.file-upload-input')[0].files = files;
+                    $('.file-upload-input').trigger('change');
+                }
+            });
+            
+            // Validation du formulaire
+            (function() {
+                'use strict';
+                window.addEventListener('load', function() {
+                    var forms = document.getElementsByClassName('needs-validation');
+                    var validation = Array.prototype.filter.call(forms, function(form) {
+                        form.addEventListener('submit', function(event) {
+                            if (form.checkValidity() === false) {
+                                event.preventDefault();
+                                event.stopPropagation();
+                            }
+                            form.classList.add('was-validated');
+                        }, false);
+                    });
+                }, false);
+            })();
         });
     </script>
 }
