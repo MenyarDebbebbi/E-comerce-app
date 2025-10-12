@@ -23,12 +23,16 @@ namespace WebApplication2.Controllers
         public ActionResult Index()
         {
             var categories = categoryRepository.GetAll();
+            ViewData["Categories"] = categories;
             return View(categories);
         }
 
         // GET: Category/Details/5
         public ActionResult Details(int id)
         {
+            var categories = categoryRepository.GetAll();
+            ViewData["Categories"] = categories;
+            
             var category = categoryRepository.GetById(id);
             if (category == null) return NotFound();
             return View(category);
@@ -37,6 +41,9 @@ namespace WebApplication2.Controllers
         // GET: Category/Create
         public ActionResult Create()
         {
+            var categories = categoryRepository.GetAll();
+            ViewData["Categories"] = categories;
+            
             return View();
         }
 
@@ -56,6 +63,9 @@ namespace WebApplication2.Controllers
         // GET: Category/Edit/5
         public ActionResult Edit(int id)
         {
+            var categories = categoryRepository.GetAll();
+            ViewData["Categories"] = categories;
+            
             var category = categoryRepository.GetById(id);
             if (category == null) return NotFound();
             return View(category);
@@ -77,6 +87,9 @@ namespace WebApplication2.Controllers
         // GET: Category/Delete/5
         public ActionResult Delete(int id)
         {
+            var categories = categoryRepository.GetAll();
+            ViewData["Categories"] = categories;
+            
             var category = categoryRepository.GetById(id);
             if (category == null) return NotFound();
             return View(category);

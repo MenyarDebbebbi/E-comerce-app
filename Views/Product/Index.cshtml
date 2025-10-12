@@ -1,4 +1,6 @@
-﻿@model IEnumerable<WebApplication2.Models.Product>
+@model IEnumerable<WebApplication2.Models.Product>
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
 @{
     ViewData["Title"] = "Liste des produits";
 }
@@ -10,9 +12,12 @@
                 <h1 class="display-5 mb-0">
                     <i class="fas fa-box me-3 text-primary"></i>Nos Produits
                 </h1>
-                <a asp-action="Create" class="btn btn-success">
-                    <i class="fas fa-plus me-2"></i>Ajouter un produit
-                </a>
+                @if (SignInManager.IsSignedIn(User) && (User.IsInRole("Admin") || User.IsInRole("Manager")))
+                {
+                    <a asp-action="Create" class="btn btn-success">
+                        <i class="fas fa-plus me-2"></i>Ajouter un produit
+                    </a>
+                }
             </div>
             <p class="text-muted mt-2">Découvrez notre collection de produits de qualité</p>
         </div>
@@ -48,14 +53,7 @@
                                     <a asp-controller="Product" asp-action="Details" asp-route-id="@product.ProductId" class="btn btn-outline-primary">
                                         <i class="fas fa-eye me-2"></i>Voir détails
                                     </a>
-                                    <div class="btn-group" role="group">
-                                        <a asp-action="Edit" asp-controller="Product" asp-route-id="@product.ProductId" class="btn btn-outline-secondary">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
-                                        <a asp-action="Delete" asp-controller="Product" asp-route-id="@product.ProductId" class="btn btn-outline-danger">
-                                            <i class="fas fa-trash"></i>
-                                        </a>
-                                    </div>
+                                    <a asp-controller="Panier" asp-action="AddProduct" class="btn btn-outline-secondary" asp-route-id="@product.ProductId">Ajouter Au Panier</a>
                                 </div>
                             </div>
                         </div>
@@ -71,12 +69,24 @@
                 <div class="card-body">
                     <i class="fas fa-box fa-4x text-muted mb-3"></i>
                     <h4 class="text-muted">Aucun produit trouvé</h4>
-                    <p class="text-muted">Commencez par ajouter votre premier produit.</p>
-                    <a asp-action="Create" class="btn btn-primary">
-                        <i class="fas fa-plus me-2"></i>Ajouter un produit
-                    </a>
+                    <p class="text-muted">@(SignInManager.IsSignedIn(User) && (User.IsInRole("Admin") || User.IsInRole("Manager")) ? "Commencez par ajouter votre premier produit." : "Aucun produit n'est disponible pour le moment.")</p>
+                    @if (SignInManager.IsSignedIn(User) && (User.IsInRole("Admin") || User.IsInRole("Manager")))
+                    {
+                        <a asp-action="Create" class="btn btn-primary">
+                            <i class="fas fa-plus me-2"></i>Ajouter un produit
+                        </a>
+                    }
                 </div>
             </div>
         </div>
     }
+    <div class="pagination">
+        @for (int i = 1; i <= ViewBag.TotalPages; i++)
+        {
+            <a asp-action="Index" asp-route-categoryId="@ViewBag.CategoryId"
+               asp-route-page="@i" class="btn btn-secondary m-1">
+                @i
+            </a>
+        }
+    </div>
 </div>

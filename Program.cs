@@ -13,6 +13,7 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("ProductDBConnect
 )));
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.Configure<IdentityOptions>(options =>
 {
     // Default Password settings.

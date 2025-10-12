@@ -853,3 +853,40 @@ body {
 .category-card:nth-child(6) {
   animation-delay: 0.6s;
 }
+
+/* Style du panier dans la navbar */
+.navbar-nav .nav-link i.fa-shopping-cart {
+  color: white;
+  font-size: 1.3rem;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover i.fa-shopping-cart {
+  transform: scale(1.15);
+  color: var(--warning-color);
+}
+
+.navbar-nav .nav-link .badge {
+  font-size: 0.65rem;
+  padding: 0.25em 0.5em;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+.navbar-nav .nav-link.position-relative {
+  padding: 0.5rem 1rem;
+}
+
+.navbar-nav .nav-link .badge.bg-danger {
+  background-color: var(--accent-color) !important;
+  box-shadow: 0 2px 4px rgba(231, 76, 60, 0.4);
+}

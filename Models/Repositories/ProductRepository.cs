@@ -82,4 +82,8 @@ public class ProductRepository : IProductRepository
                       .OrderBy(p => p.ProductId)
                       .ToList();
     }
+    public IQueryable<Product> GetAllProducts()
+    {
+        return context.Products.Include(p => p.Category);
+    }
 }

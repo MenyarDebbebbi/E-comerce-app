@@ -20,6 +20,9 @@
                     <img src="~/images/logo.png" alt="BuyTounsi logo" class="brand-logo me-2" />
                     <span>BuyTounsi</span>
                 </a>
+                <button class="btn btn-outline-primary" id="toggleMenu">
+                    <img src="~/images/categorie.png" alt="Ouvrir la liste des catégories" />
+                </button>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -49,6 +52,22 @@
                                 </div>
                             </li>
                         }
+                    </ul>
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link position-relative" asp-controller="Panier" asp-action="Index" title="Mon Panier">
+                                <i class="fas fa-shopping-cart fa-lg"></i>
+                                @{
+                                    var cartItemCount = WebApplication2.Models.Help.ListCart.Instance.Items.Count;
+                                    if (cartItemCount > 0)
+                                    {
+                                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                            @cartItemCount
+                                        </span>
+                                    }
+                                }
+                            </a>
+                        </li>
                     </ul>
                     @if (SignInManager.IsSignedIn(User))
                     {
@@ -81,9 +100,20 @@
         </nav>
     </header>
     <div class="container-fluid">
-        <main role="main" class="pb-3 fade-in">
-            @RenderBody()
-        </main>
+        <div class="row">
+            <!-- Menu latéral pour les catégories -->
+            <div class="col-md-2" id="sidebar" style="display: none;">
+                <p> </p>
+                <ul class="list-group">
+                    @await Html.PartialAsync("_CategoriesMenu", ViewData["Categories"])
+                </ul>
+            </div>
+            <div class="col-md-12" id="mainContent">
+                <main role="main" class="pb-3 fade-in">
+                    @RenderBody()
+                </main>
+            </div>
+        </div>
     </div>
 
     <footer class="footer">

@@ -1,0 +1,81 @@
+@model WebApplication2.Models.Order
+
+@{
+    ViewData["Title"] = "Confirmation de commande";
+}
+
+<div class="container mt-5">
+    <div class="alert alert-success text-center">
+        <h1>Votre commande a été validée avec succès !</h1>
+        <p class="lead">Merci pour votre achat, @Model.CustomerName ! Votre commande a bien été enregistrée.</p>
+    </div>
+
+    <div class="order-details card mt-4">
+        <div class="card-header">
+            <h2>Récapitulatif de votre commande</h2>
+        </div>
+        <div class="card-body">
+            <div class="detail-row">
+                <span class="detail-label"><strong>Numéro de commande :</strong></span>
+                <span class="detail-value">@Model.Id</span>
+            </div>
+            <div class="detail-row mt-3">
+                <span class="detail-label"><strong>Date :</strong></span>
+                <span class="detail-value">@Model.OrderDate.ToString("dd/MM/yyyy à HH:mm")</span>
+            </div>
+            <div class="detail-row mt-3">
+                <span class="detail-label"><strong>Montant total :</strong></span>
+                <span class="detail-value">@Model.TotalAmount.ToString("C")</span>
+            </div>
+            <div class="detail-row mt-3">
+                <span class="detail-label"><strong>Adresse de livraison :</strong></span>
+                <span class="detail-value">@Model.Address</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4 text-center">
+        <a asp-controller="Home" asp-action="Index" class="btn btn-primary">Retour à l'accueil</a>
+        <a asp-controller="Product" asp-action="Index" class="btn btn-secondary">Continuer mes achats</a>
+    </div>
+</div>
+
+<style>
+    .order-details {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .detail-row {
+        padding: 10px 0;
+        border-bottom: 1px solid #e9ecef;
+    }
+
+    .detail-row:last-child {
+        border-bottom: none;
+    }
+
+    .detail-label {
+        display: inline-block;
+        min-width: 200px;
+        color: #495057;
+    }
+
+    .detail-value {
+        color: #212529;
+        font-weight: 500;
+    }
+
+    .alert-success h1 {
+        color: #155724;
+        font-size: 2rem;
+        margin-bottom: 1rem;
+    }
+
+    .card-header h2 {
+        margin: 0;
+        font-size: 1.5rem;
+        color: #495057;
+    }
+</style>
+
