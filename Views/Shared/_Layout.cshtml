@@ -20,81 +20,88 @@
                     <img src="~/images/logo.png" alt="BuyTounsi logo" class="brand-logo me-2" />
                     <span>BuyTounsi</span>
                 </a>
-                <button class="btn btn-outline-primary" id="toggleMenu">
-                    <img src="~/images/categorie.png" alt="Ouvrir la liste des catégories" />
+                <button class="btn btn-light d-inline-flex align-items-center gap-2" id="toggleMenu" type="button" aria-expanded="false" aria-controls="sidebar">
+                    <i class="fa-solid fa-list-ul fs-5" aria-hidden="true"></i>
+                    <span>Catégories</span>
+                    <span class="visually-hidden">Ouvrir la liste des catégories</span>
                 </button>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Index">List des Produits</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Category" asp-action="Index">List des Categories</a>
-                        </li>
-                        @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
-                        {
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Administration</a>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="CreateRole">Create Role</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="ListRoles">List Roles</a>
-                                </div>
-                            </li>
-                        }
-                    </ul>
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link position-relative" asp-controller="Panier" asp-action="Index" title="Mon Panier">
-                                <i class="fas fa-shopping-cart fa-lg"></i>
-                                @{
-                                    var cartItemCount = WebApplication2.Models.Help.ListCart.Instance.Items.Count;
-                                    if (cartItemCount > 0)
-                                    {
-                                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                            @cartItemCount
-                                        </span>
-                                    }
-                                }
-                            </a>
-                        </li>
-                    </ul>
-                    @if (SignInManager.IsSignedIn(User))
-                    {
-                        <ul class="navbar-nav">
+                <div class="navbar-collapse collapse w-100">
+                    <div class="navbar-content d-flex flex-column flex-lg-row align-items-lg-center justify-content-lg-between w-100 gap-3">
+                        <ul class="navbar-nav flex-grow-1 order-1">
                             <li class="nav-item">
-                                <form method="post" asp-controller="Account" asp-action="Logout">
-                                    @Html.AntiForgeryToken()
-                                    <button type="submit" class="nav-link btn btn-link py-0">Logout @User.Identity.Name</button>
-                                </form>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                             </li>
+                         
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Index"> Produits</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Category" asp-action="Index">  Categories</a>
+                            </li>
+                            @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                            {
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Administration</a>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="CreateRole">Create Role</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="ListRoles">List Roles</a>
+                                    </div>
+                                </li>
+                            }
                         </ul>
-                    }
-                    else
-                    {
-                        <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <a class="nav-link" asp-controller="Account" asp-action="Register">Register</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-controller="Account" asp-action="Login">Login</a>
-                            </li>
-                        </ul>
-                    }
-                    <form class="d-flex" asp-area="" asp-controller="Product" asp-action="Search">
-                        <input class="form-control me-sm-2" type="search" placeholder="Search" name="val">
-                        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-                    </form>
+                        <form class="search-form mx-lg-auto order-3 order-lg-2 w-100 w-lg-auto" asp-area="" asp-controller="Product" asp-action="Search">
+                            <input class="search-input" type="search" placeholder="Rechercher un produit..." name="val" aria-label="Rechercher un produit">
+                            <button class="search-btn" type="submit">
+                                <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                                <span class="visually-hidden">Lancer la recherche</span>
+                            </button>
+                        </form>
+                        <div class="d-flex flex-column flex-lg-row align-items-lg-center gap-3 order-2 order-lg-3 w-100 w-lg-auto ms-lg-auto">
+                            <ul class="navbar-nav flex-column flex-lg-row align-items-lg-center gap-2 gap-lg-3">
+                                <li class="nav-item">
+                                    <a class="nav-link position-relative" asp-controller="Panier" asp-action="Index" title="Mon Panier">
+                                        <i class="fas fa-shopping-cart fa-lg"></i>
+                                        @{
+                                            var cartItemCount = WebApplication2.Models.Help.ListCart.Instance.Items.Count;
+                                            if (cartItemCount > 0)
+                                            {
+                                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                                    @cartItemCount
+                                                </span>
+                                            }
+                                        }
+                                    </a>
+                                </li>
+                            </ul>
+                            @if (SignInManager.IsSignedIn(User))
+                            {
+                                <ul class="navbar-nav flex-column flex-lg-row align-items-lg-center gap-2 gap-lg-3">
+                                    <li class="nav-item">
+                                        <form method="post" asp-controller="Account" asp-action="Logout">
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit" class="nav-link btn btn-link py-0">Logout @User.Identity.Name</button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            }
+                            else
+                            {
+                                <ul class="navbar-nav flex-column flex-lg-row align-items-lg-center gap-2 gap-lg-3">
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-controller="Account" asp-action="Register">Register</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-controller="Account" asp-action="Login">Login</a>
+                                    </li>
+                                </ul>
+                            }
+                        </div>
+                    </div>
                 </div>
             </div>
         </nav>
