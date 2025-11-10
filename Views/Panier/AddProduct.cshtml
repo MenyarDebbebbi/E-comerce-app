@@ -1,7 +1,6 @@
 ﻿@{
 ViewBag.Title = "Ajouter Produit";
 }
-<h2>Mon panier</h2>
 <body>
 <div>
 @if (ViewBag.Liste.Count > 0)
@@ -22,14 +21,18 @@ ViewBag.Title = "Ajouter Produit";
 <td>
 <h5>Nom : @item.Prod.Name </h5><hr/>
 <h5>Catégorie : @item.Prod.Category.CategoryName </h5><hr/>
-                            <h5>Quantité : <span id="quantite_@item.Prod.ProductId">@item.quantite</span></h5><hr /><a href="#" class="PlusProducts" data-id="@item.Prod.ProductId">
-                                <img src="~/images/add.png" style="width:50px;height:50px">
+    <h5>Quantité : <span id="quantite_@item.Prod.ProductId">@item.quantite</span></h5><hr />
+                            <a href="#" class="PlusProducts btn-action-icon" data-id="@item.Prod.ProductId" title="Augmenter la quantité">
+                                <i class="fa-solid fa-circle-plus" aria-hidden="true"></i>
+                                <span class="visually-hidden">Augmenter la quantité</span>
                             </a>
-                            <a href="#" class="MinProducts" data-id="@item.Prod.ProductId">
-                                <img src="~/images/moin.png" style="width:50px;height:50px">
+                            <a href="#" class="MinProducts btn-action-icon" data-id="@item.Prod.ProductId" title="Diminuer la quantité">
+                                <i class="fa-solid fa-circle-minus" aria-hidden="true"></i>
+                                <span class="visually-hidden">Diminuer la quantité</span>
                             </a>
-                            <a href="#" class="RemoveLink" data-id="@item.Prod.ProductId">
-                                <img src="~/images/delet.png" style="width:50px;height:50px">
+                            <a href="#" class="RemoveLink btn-action-icon" data-id="@item.Prod.ProductId" title="Retirer le produit">
+                                <i class="fa-solid fa-trash-can" aria-hidden="true"></i>
+                                <span class="visually-hidden">Retirer le produit</span>
                             </a>
                             <div>
                                 <hr />
