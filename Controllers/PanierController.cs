@@ -1,4 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using WebApplication2.Models;
 using WebApplication2.Models.Help;
@@ -97,11 +102,67 @@ namespace WebApplication2.Controllers
             var order = orderRepository.GetById(orderId);
             return View(order);
         }
-        public ActionResult Index()
+        public async Task<IActionResult> Index()
         {
             ViewBag.Liste = ListCart.Instance.Items;
             ViewBag.total = ListCart.Instance.GetSubTotal();
+            var orderHistory = new List<Order>();
+
+            if (User.Identity?.IsAuthenticated == true)
+            {
+                var user = await userManager.GetUserAsync(User).ConfigureAwait(false);
+                if (user != null)
+                {
+                    var recentOrders = await orderRepository
+                        .GetRecentOrdersByUserIdAsync(user.Id, 5)
+                        .ConfigureAwait(false);
+                    orderHistory.AddRange(recentOrders);
+                }
+            }
+
+            ViewBag.OrderHistory = orderHistory;
             return View();
+        }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> History()
+        {
+            var user = await userManager.GetUserAsync(User).ConfigureAwait(false);
+            if (user == null)
+            {
+                return RedirectToAction("Login", "Account", new { returnUrl = Request.Path });
+            }
+
+            var orders = await orderRepository
+                .GetOrdersByUserIdAsync(user.Id)
+                .ConfigureAwait(false);
+
+            var orderEntries = orders
+                .Select(order => new OrderHistoryEntryViewModel
+                {
+                    OrderId = order.Id,
+                    OrderDate = order.OrderDate,
+                    TotalAmount = Convert.ToDecimal(order.TotalAmount),
+                    Address = order.Address ?? string.Empty,
+                    Items = order.Items?
+                        .Select(item => new OrderHistoryItemViewModel
+                        {
+                            ProductName = item.ProductName,
+                            Quantity = item.Quantity,
+                            UnitPrice = Convert.ToDecimal(item.Price)
+                        })
+                        .ToList() ?? new List<OrderHistoryItemViewModel>()
+                })
+                .ToList();
+
+            var viewModel = new OrderHistoryViewModel
+            {
+                UserDisplayName = user.UserName ?? user.Email ?? "Client",
+                Orders = orderEntries
+            };
+
+            return View(viewModel);
         }
         public ActionResult AddProduct(int id)
         {
