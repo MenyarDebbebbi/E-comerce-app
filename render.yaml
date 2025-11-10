@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: webapplication2
+    runtime: docker
+    region: oregon
+    plan: starter
+    dockerfilePath: Dockerfile
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+
