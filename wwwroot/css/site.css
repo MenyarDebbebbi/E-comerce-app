@@ -890,3 +890,142 @@ body {
   background-color: var(--accent-color) !important;
   box-shadow: 0 2px 4px rgba(231, 76, 60, 0.4);
 }
+
+/* Barre de recherche dans la navbar */
+.search-form {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.35rem 0.35rem 0.35rem 1rem;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 999px;
+  width: min(320px, 100%);
+  transition: box-shadow 0.3s ease, border-color 0.3s ease,
+    background 0.3s ease;
+}
+
+.search-form:focus-within {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 8px 20px rgba(106, 76, 147, 0.25);
+}
+
+.search-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  color: white;
+  font-size: 0.95rem;
+  padding: 0.35rem 0;
+}
+
+.search-input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.search-input:focus {
+  outline: none;
+}
+
+.search-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: linear-gradient(
+    135deg,
+    var(--secondary-color) 0%,
+    #357abd 100%
+  );
+  color: white;
+  border: none;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.search-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(74, 144, 226, 0.35);
+}
+
+.search-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 0.25rem rgba(74, 144, 226, 0.35);
+}
+
+@media (max-width: 992px) {
+  .search-form {
+    width: 100%;
+    margin-top: 1rem;
+  }
+}
+
+/* Icone panier vide */
+.empty-cart-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background: linear-gradient(
+    135deg,
+    rgba(106, 76, 147, 0.85) 0%,
+    rgba(74, 144, 226, 0.85) 100%
+  );
+  box-shadow: 0 12px 30px rgba(106, 76, 147, 0.25);
+  color: #ffffff;
+  font-size: 3.5rem;
+  position: relative;
+}
+
+.empty-cart-icon::after {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  border-radius: 50%;
+  border: 2px dashed rgba(255, 255, 255, 0.4);
+}
+
+.empty-cart-icon i {
+  position: relative;
+  z-index: 1;
+}
+
+/* Icônes actions panier */
+.btn-action-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  margin-right: 0.5rem;
+  border-radius: 50%;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.85) 0%,
+    rgba(255, 255, 255, 0.65) 100%
+  );
+  color: var(--secondary-color);
+  box-shadow: 0 6px 15px rgba(74, 144, 226, 0.25);
+  transition: transform 0.25s ease, box-shadow 0.3s ease,
+    color 0.3s ease;
+  text-decoration: none;
+  font-size: 1.6rem;
+}
+
+.btn-action-icon:hover,
+.btn-action-icon:focus {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 22px rgba(106, 76, 147, 0.25);
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+.btn-action-icon:focus {
+  outline: none;
+  box-shadow: 0 0 0 0.2rem rgba(74, 144, 226, 0.25),
+    0 10px 22px rgba(106, 76, 147, 0.25);
+}
